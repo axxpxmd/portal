@@ -191,7 +191,6 @@
     @include('layouts.header')
 
     <!-- Wrapper start -->
-    {{-- <livewire:navigate /> --}}
     <main>
         <div id="wrapper" class="wrap overflow-hidden-x">
             {{ $slot }}
