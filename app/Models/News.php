@@ -19,5 +19,5 @@ class News extends Model
         'c_status',
         'n_user',
         'id_user',
-    ]
+    ];
 }

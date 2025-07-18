@@ -33,11 +33,7 @@
                         </div>
                     </div>
                     <div class="footer-copyright vstack sm:hstack justify-center items-center gap-1 lg:gap-2">
-                        <p>TANGERANG SELATAN <script>
-                        document.write(
-                            new Date().getFullYear()
-                        )
-                    </script>, All rights reserved.</p>
+                        <p>TANGERANG SELATAN 2025, All rights reserved.</p>
                     </div>
                 </div>
             </div>

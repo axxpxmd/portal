@@ -198,7 +198,7 @@
     </main>
 
     <!-- Footer start -->
-    {{-- @include('layouts.footer') --}}
+    @include('layouts.footer')
 
 @livewireScripts
 <!-- include jquery & bootstrap js -->
@@ -219,34 +219,59 @@
 <script defer src="{{ asset('assets/js/app.js') }}"></script>
 @push('scripts')
 <script>
-    function initSwiper() {
-        new Swiper('.swiper', {
+    function initHomeSwipers() {
+        const mainEl = document.querySelector('.swiper-main');
+        const thumbsEl = document.querySelector('.swiper-thumbs');
+
+        // Cek apakah semua elemen swiper valid
+        if (!mainEl || !thumbsEl) return;
+        if (!mainEl.querySelector('.swiper-slide') || !thumbsEl.querySelector('.swiper-slide')) return;
+
+        // Destroy jika sudah ada instance sebelumnya
+        if (mainEl.swiper) mainEl.swiper.destroy(true, true);
+        if (thumbsEl.swiper) thumbsEl.swiper.destroy(true, true);
+
+        const thumbsSwiper = new Swiper(thumbsEl, {
+            slidesPerView: 3,
+            direction: 'vertical',
+            spaceBetween: 16,
+            mousewheel: true,
+            freeMode: true,
+            watchSlidesProgress: true,
+        });
+
+        const mainSwiper = new Swiper(mainEl, {
+            slidesPerView: 1,
+            effect: 'fade',
+            fadeEffect: { crossFade: true },
             loop: true,
             autoplay: {
-                delay: 6000,
-            },
-            effect: 'fade',
-            fadeEffect: {
-                crossFade: true
+                delay: 5000,
             },
             navigation: {
-                nextEl: '.nav-next',
-                prevEl: '.nav-prev',
+                nextEl: '.swiper-next',
+                prevEl: '.swiper-prev',
             },
             pagination: {
                 el: '.swiper-pagination',
                 clickable: true,
             },
+            thumbs: {
+                swiper: thumbsSwiper,
+            },
         });
     }
 
-    document.addEventListener('livewire:navigated', () => {
-        initSwiper();
+    // Panggil saat pertama kali halaman dimuat
+    document.addEventListener('DOMContentLoaded', () => {
+        initHomeSwipers();
     });
 
-    // Inisialisasi awal saat pertama kali halaman dimuat
-    document.addEventListener('DOMContentLoaded', () => {
-        initSwiper();
+    // Panggil ulang setiap navigasi balik (Livewire 3 SPA)
+    document.addEventListener('livewire:navigated', () => {
+        setTimeout(() => {
+            initHomeSwipers();
+        }, 50); // kecil delay supaya pastikan DOM siap
     });
 </script>
 @endpush

@@ -5,6 +5,8 @@ namespace App\Livewire;
 use Livewire\Component;
 use Illuminate\Support\Facades\Http;
 
+use App\Models\News;
+
 class Home extends Component
 {
     public $berita = [];
@@ -50,6 +52,11 @@ class Home extends Component
 
     public function render()
     {
-        return view('livewire.home')->layout('layouts.app'); 
+        $datas = News::where('c_status', '1')
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+
+        return view('livewire.home', compact('datas'))->layout('layouts.app'); 
     }
 }
